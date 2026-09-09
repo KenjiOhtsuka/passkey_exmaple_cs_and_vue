@@ -6,7 +6,7 @@ isolated worker app, and why certain parts of the code exist.
 ## Components
 
 ```mermaid
-flowchart LR
+flowchart
     subgraph Browser["Browser"]
         U["WebAuthn API<br/>navigator.credentials.create / .get"]
     end
