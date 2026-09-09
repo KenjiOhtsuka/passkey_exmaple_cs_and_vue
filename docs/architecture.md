@@ -7,27 +7,27 @@ isolated worker app, and why certain parts of the code exist.
 
 ```mermaid
 flowchart LR
-    subgraph Browser
-        U[WebAuthn API<br/>navigator.credentials.create/.get]
+    subgraph Browser["Browser"]
+        U["WebAuthn API<br/>navigator.credentials.create / .get"]
     end
     subgraph Frontend["Vue 3 + Vite (5173)"]
-        V[Views: Login / Register / Dashboard]
-        P[passkey.js<br/>@simplewebauthn/browser]
-        A[api.js<br/>fetch wrapper]
+        V["Views - Login / Register / Dashboard"]
+        P["passkey.js<br/>SimpleWebAuthn browser"]
+        A["api.js - fetch wrapper"]
     end
     subgraph Functions["Azure Functions host (7071)"]
-        RT[Functions Host proxy<br/>gRPC to worker]
-        MW[HttpContextAccessorMiddleware]
-        FN[AuthFunctions<br/>10 x HttpTrigger endpoints]
-        SM[SignInManager + PasskeyHandler<br/>ASP.NET Core Identity]
-        MAC[IHttpContextAccessor<br/>bridge]
+        RT["Functions Host proxy<br/>gRPC to worker"]
+        MW["HttpContextAccessorMiddleware"]
+        FN["AuthFunctions - 10 HttpTrigger endpoints"]
+        SM["SignInManager + PasskeyHandler<br/>ASP.NET Core Identity"]
+        MAC["IHttpContextAccessor bridge"]
     end
-    DB[(SQLite<br/>Users, UserPasskeys, ...)]
+    DB[("SQLite - Users, UserPasskeys, ...")]
 
     U <--> V
     V --> A
-    A -->|"/api/*"| ViteProxy[/Vite proxy changeOrigin/]
-    ViteProxy -->|http://localhost:7071| RT
+    A -->|"/api/*"| ViteProxy["Vite proxy changeOrigin"]
+    ViteProxy -->|"http://localhost:7071"| RT
     RT --> MW --> FN --> SM <--> DB
 ```
 
