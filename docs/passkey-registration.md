@@ -8,12 +8,12 @@
 ```mermaid
 sequenceDiagram
     autonumber
-    participant U as User (browser)
-    participant F as Vue frontend (localhost:5173)
-    participant B as Browser WebAuthn API
-    participant S as AuthFunctions (localhost:7071)
-    participant I as ASP.NET Core Identity
-    participant D as SQLite (UserPasskeys)
+    participant U as "User (browser)"
+    participant F as "Vue frontend (localhost:5173)"
+    participant B as "Browser WebAuthn API"
+    participant S as "AuthFunctions (localhost:7071)"
+    participant I as "ASP.NET Core Identity"
+    participant D as "SQLite (UserPasskeys)"
 
     U->>F: Clicks "Add a passkey"
     F->>S: POST /api/auth/passkey/create-options
